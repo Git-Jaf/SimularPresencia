@@ -21,7 +21,7 @@ public class SimularPresencia implements Runnable {
         int contador = 0;
         int x = 0, y = 0;
         tiempo = Double.parseDouble(ControlMouse.cbTiempo.getSelectedItem().toString());
-        tiempoAux = tiempo * 600;
+        tiempoAux = tiempo * 60;
         System.out.println("Tiempo fuera: "+tiempoAux+ " segundos");
         try {
             robot = new Robot();
@@ -32,9 +32,13 @@ public class SimularPresencia implements Runnable {
             for (int i = 0; i <= tiempoAux; i++) {
                 x = i;
                 y = 500;
-                robot.mouseMove(x, y);
+                if (par(i) || i == 0) {
+                    robot.mouseMove(x, y);
+                } else {
+                    robot.mouseMove(y, x);
+                }
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(SimularPresencia.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -46,6 +50,7 @@ public class SimularPresencia implements Runnable {
                     JOptionPane.showMessageDialog(null, "Ha cumplido su tiempo fuera");
                     new Thread(vagancia).stop();
                     estado = false;
+                    ControlMouse.btnIniciar.setEnabled(true);
                 }
             }
         }

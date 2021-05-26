@@ -6,26 +6,30 @@
 package simularpresencia;
 
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import javax.swing.JOptionPane;
 
 /*
  * @author Alvarez
  */
 public class ControlMouse extends javax.swing.JFrame {
     public static boolean estado;
-    Runnable vagancia = new SimularPresencia();
+    Runnable vagancia;
     public ControlMouse() {
+        vagancia = new SimularPresencia();
         initComponents();
         this.setLocationRelativeTo(null);
+        this.requestFocus(true);
     }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        cbTiempo = new javax.swing.JComboBox<>();
-        btnIniciar = new javax.swing.JButton();
         lblTiempo = new javax.swing.JLabel();
+        cbTiempo = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        btnIniciar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -36,11 +40,14 @@ public class ControlMouse extends javax.swing.JFrame {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("minutos");
+        lblTiempo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblTiempo.setText("Tiempo fuera:");
 
         cbTiempo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbTiempo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "5", "15", "30", "45", "60", "120", "240", "360", "480" }));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel1.setText("minutos");
 
         btnIniciar.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         btnIniciar.setText("Iniciar");
@@ -50,41 +57,34 @@ public class ControlMouse extends javax.swing.JFrame {
             }
         });
 
-        lblTiempo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblTiempo.setText("Tiempo fuera:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnIniciar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lblTiempo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTiempo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cbTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblTiempo, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnIniciar, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(7, 7, 7))
         );
 
         pack();
@@ -93,13 +93,15 @@ public class ControlMouse extends javax.swing.JFrame {
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
         estado = true;
         new Thread(vagancia).start();
-        lblTiempo.setFocusable(true);
+        btnIniciar.setEnabled(false);
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         switch (evt.getKeyCode()) {
             case KeyEvent.VK_SPACE:
-                new Thread(vagancia).stop();
+                JOptionPane.showMessageDialog(null, "Se detiene el proceso por orden del usuario");
+                //new Thread(vagancia).stop();
+                //estado = false;
                 break;
             default:
                 break;
@@ -142,7 +144,7 @@ public class ControlMouse extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnIniciar;
+    public static javax.swing.JButton btnIniciar;
     public static javax.swing.JComboBox<String> cbTiempo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblTiempo;
