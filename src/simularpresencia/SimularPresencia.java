@@ -19,10 +19,10 @@ public class SimularPresencia implements Runnable {
         boolean estado = ControlMouse.estado;
         Robot robot = null;
         int contador = 0;
-        int x = 0, y = 0;
+        int x = 0, y = 0, z = 0;
         tiempo = Double.parseDouble(ControlMouse.cbTiempo.getSelectedItem().toString());
-        tiempoAux = tiempo * 60;
-        System.out.println("Tiempo fuera: "+tiempoAux+ " segundos");
+        tiempoAux = tiempo * 12;
+        System.out.println("Tiempo fuera: "+tiempoAux * 5+ " segundos");
         try {
             robot = new Robot();
         } catch (AWTException ex) {
@@ -30,20 +30,21 @@ public class SimularPresencia implements Runnable {
         }
         while (estado) {
             for (int i = 0; i <= tiempoAux; i++) {
-                x = i;
-                y = 500;
+                x = 500;
+                y = 20;
                 if (par(i) || i == 0) {
                     robot.mouseMove(x, y);
                 } else {
                     robot.mouseMove(y, x);
                 }
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(5000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(SimularPresencia.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 contador++;
                 System.out.println(contador);
+                System.out.println("Valor de i: "+i);
                 System.out.println("Valor de x: "+x);
                 System.out.println("Valor de y: "+y);
                 if (contador == tiempoAux) {
